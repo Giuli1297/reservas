@@ -1,0 +1,42 @@
+<% layout('./layouts/base') %>
+    <h1>Registrarse</h1>
+    <form action="/cliente/registrar" class="validated-form" method="POST" novalidate>
+        <div class="mb-3">
+            <label class="form-label" for="username">Username</label>
+            <input class="form-control" type="text" id="username" name="username" required>
+            <div class="valid-feedback">
+                Looks good!
+            </div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="cedula">Cedula</label>
+            <input class="form-control" type="text" id="cedula" name="cedula" required>
+            <div class="valid-feedback">
+                Looks good!
+            </div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="nombre">Nombre</label>
+            <input class="form-control" type="text" id="nombre" name="nombre" required>
+            <div class="valid-feedback">
+                Looks good!
+            </div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="apellido">Apellido</label>
+            <input class="form-control" type="text" id="apellido" name="apellido" required>
+            <div class="valid-feedback">
+                Looks good!
+            </div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="password">Password</label>
+            <input class="form-control" type="password" id="password" name="password" required>
+            <div class="valid-feedback">
+                Looks good!
+            </div>
+        </div>
+        <div class="mb-2">
+            <button class="btn btn-success">Registrarse</button>
+        </div> 
+    </form>
