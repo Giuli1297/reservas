@@ -8,14 +8,24 @@ const { isLoggedIn } = require('../utils/authMiddlewares');
 //Controller
 const clients = require('../controllers/clients');
 
+router.route('/')
+    .get(catchAsync(clients.listClients));
+
 router.route('/registrar')
     .get(clients.serveRegisterForm)
-    .post(catchAsync(clients.register));
+    .put(catchAsync(clients.register));
 
 router.route('/login')
     .get(clients.serveLoginForm)
-    .post(passport.authenticate('local', {failureFlash: true, failureRedirect: '/login'}), clients.login);
+    .post(passport.authenticate('local', {failureRedirect: '/cliente/login'}), clients.login);
 
-router.get('/logout', clients.logout)
+router.route('/editar')
+    .get(isLoggedIn, catchAsync(clients.serveEditForm))
+    .post(catchAsync(clients.edit));
+
+router.route('/eliminar')
+    .delete(catchAsync(clients.deleteAcount));
+
+router.get('/logout', clients.logout);
 
 module.exports = router;

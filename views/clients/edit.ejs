@@ -1,0 +1,41 @@
+<% layout('./layouts/base') %>
+    <div class="row">
+        <h1 class="text-center">Editar Perfil</h1>
+        <div class="col-6 offset-3">
+            <form action="/cliente/editar" method="POST" class="validated-form" novalidate>
+                <input type="hidden" name="id" value="<%= cliente._id %>">
+                <div class="mb-3">
+                    <label class="form-label" for="username">Username</label>
+                    <input class="form-control" type="text" id="username" name="username"
+                        value="<%= cliente.username %>" required>
+                    <div class="valid-feedback">
+                        Looks nice!
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="nombre">Nombre</label>
+                    <input class="form-control" type="text" id="nombre" name="nombre"
+                        value="<%= cliente.nombre %>" required>
+                    <div class="valid-feedback">
+                        Looks nice!
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="apellido">Apellido</label>
+                    <input class="form-control" type="text" id="apellido" name="apellido"
+                        value="<%= cliente.apellido %>" required>
+                    <div class="valid-feedback">
+                        Looks nice!
+                    </div>
+                </div>
+                <div class=mb-3>
+                    <button class="btn btn-success">Guardar Cambios</button>
+                </div>
+            </form>
+            <a class="btn btn-primary" href="/" role="button">Go back</a>
+            <form action="/cliente/eliminar?_method=DELETE" method="POST" class="mt-3">
+                <input type="hidden" name="id" value="<%= cliente._id %>">
+                <button class="btn btn-danger">Delete Acount</a>
+            </form>
+        </div>
+    </div>

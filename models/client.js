@@ -16,9 +16,15 @@ const ClientSchema = new Schema({
     apellido: {
         type: String,
         required: true
-    }
+    },
+    reservas: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Reserva'
+        }
+    ]
 });
 
 ClientSchema.plugin(passportLocalMongoose);
 
-module.exports = mongoose.model('Client', ClientSchema);
+module.exports = mongoose.model('Cliente', ClientSchema);

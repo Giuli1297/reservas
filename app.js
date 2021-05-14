@@ -8,6 +8,7 @@ const session = require('express-session');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const ExpressError = require('./utils/ExpressError');
+const { isLoggedIn } = require('./utils/authMiddlewares');
 
 //Database connection
 mongoose.connect('mongodb://localhost:27017/reservas-db', {
@@ -52,18 +53,23 @@ passport.serializeUser(Client.serializeUser());
 passport.deserializeUser(Client.deserializeUser());
 
 app.use((req, res, next)=>{
-    res.locals.currentUser = req.user;
+    res.locals.currentUser = req.user || "nobody";
     next();
 });
 
 //Routes
 const clientRoutes = require('./routes/clients');
-const { isLoggedIn } = require('./utils/authMiddlewares');
+const restauranteRoutes = require('./routes/restaurantes');
+const mesaRoutes = require('./routes/mesas');
+const reservaRoutes = require('./routes/reservas');
 
 app.get('/', isLoggedIn, (req, res)=>{
     res.render('home');
 });
 app.use('/cliente', clientRoutes);
+app.use('/restaurante', restauranteRoutes);
+app.use('/mesa', mesaRoutes);
+app.use('/reservas', reservaRoutes);
 
 //Error Handling
 app.all('*', (req, res, next)=>{
