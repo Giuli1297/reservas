@@ -7,6 +7,7 @@ const ejsMate = require('ejs-mate');
 const session = require('express-session');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
+const flash = require('connect-flash');
 const ExpressError = require('./utils/ExpressError');
 const { isLoggedIn } = require('./utils/authMiddlewares');
 
@@ -52,8 +53,11 @@ passport.use(new LocalStrategy(Client.authenticate()));
 passport.serializeUser(Client.serializeUser());
 passport.deserializeUser(Client.deserializeUser());
 
+app.use(flash());
 app.use((req, res, next)=>{
-    res.locals.currentUser = req.user || "nobody";
+    res.locals.currentUser = req.user;
+    res.locals.success = req.flash('success');
+    res.locals.error = req.flash('error');
     next();
 });
 
@@ -64,7 +68,7 @@ const mesaRoutes = require('./routes/mesas');
 const reservaRoutes = require('./routes/reservas');
 
 app.get('/', isLoggedIn, (req, res)=>{
-    res.render('home');
+    res.redirect('/reservas');
 });
 app.use('/cliente', clientRoutes);
 app.use('/restaurante', restauranteRoutes);

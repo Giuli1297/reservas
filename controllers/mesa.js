@@ -4,6 +4,7 @@ const Restaurante = require('../models/restaurante');
 const createMesa = async (req, res)=>{
     const restaurant = await Restaurante.findOne({_id: req.body.idRestaurante});
     const mesa = new Mesa(req.body.mesa);
+    mesa.restaurante = restaurant.nombre;
     restaurant.mesas.push(mesa);
     await mesa.save();
     await restaurant.save();
@@ -27,7 +28,9 @@ const updateMesa = async (req, res)=>{
 }
 
 const deleteMesa = async (req, res)=>{
-    const deletedMesa = await Mesa.deleteOne({_id: req.body._id});
+    const id = req.body._id; 
+    const deletedMesa = await Mesa.findByIdAndDelete(id);
+    await Restaurante.findOneAndUpdate({mesas: id}, {$pull: {mesas: id}});
     res.status(200).send(deletedMesa);
 }
 

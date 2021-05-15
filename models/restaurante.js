@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const Mesa = require('./mesa');
+const Reserva = require('./reserva');
 
 const RestauranteSchema = new Schema({
     nombre: {
@@ -23,9 +24,13 @@ const RestauranteSchema = new Schema({
 
 RestauranteSchema.post('findOneAndDelete', async function (doc){
     if(doc){
+        const mesas = doc.mesas;
         await Mesa.deleteMany({
             _id: { $in: doc.mesas }
         });
+        await Reserva.deleteMany({
+            mesa: { $in: doc.mesas }
+        })
     }
 });
 

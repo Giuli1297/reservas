@@ -20,6 +20,11 @@ const MesaSchema = Schema({
         type: Number,
         required: true
     },
+    restaurante: {
+        _id: {id:false},
+        type: String,
+        required: true
+    },
     reservas: [
         {
             type: Schema.Types.ObjectId,

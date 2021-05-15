@@ -1,0 +1,63 @@
+<% layout('./layouts/base') %>
+<div class="row">
+    <div class="col-6">
+        <h1>Parametros para listar</h1>
+        <form action="/reservas/list" class="validated-form" method="GET" novalidate>
+            <div class="mb-3">
+                <label class="form-label" for="restaurante">Restaurante</label>
+                <input class="form-control" type="text" id="restaurante" name="restaurante">
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="Fecha">Fecha</label>
+                <input class="form-control" type="date" id="Fecha" name="fecha">
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="cliente">Cliente C.I.</label>
+                <input class="form-control" type="text" id="cliente" name="cliente">
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+            <div class="mb-2">
+                <button class="btn btn-success">Listar</button>
+            </div> 
+        </form>
+    </div>
+    <div class="col-6">
+        <% if(reservaRest && reservaRest.length>0){ %> 
+            <% for(let reserva of reservaRest){ %>
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-subtitle mb-2 text-muted">Restaurante: <%= reserva.mesa.restaurante %></h5>
+                        <p class="card-text">
+                            Mesa: <%= reserva.mesa.nombre %>  
+                        </p>
+                        <% 
+                        let d = reserva.fecha;
+                        d.setDate(d.getDate()+1);
+                        let ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
+                        let mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d);
+                        let da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
+                        let fechaxd = `${da}-${mo}-${ye}`; 
+                        %> 
+                        <p class="card-text">Fecha: <%= fechaxd %></p>            
+                        <p class="card-text"> - Desde: <%= reserva.horaInicio %> hs. - Hasta: <%= reserva.horaFinal %> hs.  
+                        </p>
+                        <% if(reserva.clienteCI == currentUser.cedula){ %>
+                            <form action="/reservas/<%= reserva._id %>?_method=DELETE"
+                                method="POST">
+                                <button class="btn btn-danger">Cancelar</button>
+                            </form>
+                        <% } %>  
+                    </div>
+                </div>
+            <% } %>
+        <% } %> 
+    </div>
+

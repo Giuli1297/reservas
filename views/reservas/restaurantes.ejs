@@ -1,0 +1,46 @@
+<% layout('./layouts/base') %>
+<h1>ResvApp</h1>
+    <div>
+        <h4 class="mb-3"><a href="/listReservas">Listar Reservas</a></h4>
+    </div>
+    <ul>
+        <% for (let restaurante of restaurantes) { %>
+            <div class="card mb-3">
+                <div class="row">
+                    <div class="col-md-4">
+                        <img class="img-fluid" alt="No image found" style="height: 300px; width: 400px;" src="<%= restaurante.imagen %>">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <% 
+                                function capitalize(word) {
+                                    return word.charAt(0).toUpperCase() + word.slice(1);
+                                } %>    
+                                <%= capitalize(restaurante.nombre) %>
+                            </h5>
+                            <p class="card-text">
+                                Mesas que tiene este restaurante: <%= restaurante.mesas.length %>
+                            </p>
+                            <p class="card-text">
+                                <small class="text-muted">
+                                    <%= restaurante.direccion %>
+                                </small>
+                            </p>
+                            <form action="/reservas/<%= restaurante._id %>" class="validated-form" method="GET" novalidate>
+                                <label class="form-label" for="fechaReserva">Fecha:</label>
+                                <% 
+                                var date = new Date();
+                                var dateString = new Date(date.getTime() - (date.getTimezoneOffset() * 60000 ))
+                                                    .toISOString()
+                                                    .split("T")[0];
+                                %>     
+                                <input class="form-control mb-3" type="date" id="fechaReserva" name="fecha" min="<%= dateString %>" required>
+                                <button class="btn btn-dark">Reservar <%= restaurante.nombre %></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <% } %>
+    </ul>

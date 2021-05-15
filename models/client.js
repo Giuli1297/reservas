@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const passportLocalMongoose = require('passport-local-mongoose');
 
+const Reserva = require('../models/reserva');
+
 //Model
 const ClientSchema = new Schema({
     cedula: {
@@ -26,5 +28,13 @@ const ClientSchema = new Schema({
 });
 
 ClientSchema.plugin(passportLocalMongoose);
+
+ClientSchema.post('findOneAndDelete', async function (doc){
+    if(doc){
+        await Reserva.deleteMany({
+            _id: { $in: doc.reservas }
+        });
+    }
+});
 
 module.exports = mongoose.model('Cliente', ClientSchema);

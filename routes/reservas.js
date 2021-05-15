@@ -2,18 +2,19 @@ const express = require('express');
 const router = express.Router();
 const catchAsync = require('../utils/catchAsync');
 
+const { isLoggedIn, isAuthor } = require('../utils/authMiddlewares');
+
 const reservas = require('../controllers/reserva');
 
 router.route('/')
-    .get(catchAsync(reservas.listReserva));
+    .get(isLoggedIn, catchAsync(reservas.serveRestaurantes))
+    .post(isLoggedIn, catchAsync(reservas.reservar));
 
-router.route('/create')
-    .put(catchAsync(reservas.createReserva));
+router.route('/list')
+    .get(isLoggedIn, catchAsync(reservas.serveFormListReservas));
 
-router.route('/update')
-    .post(catchAsync(reservas.updateReserva));
-
-router.route('/delete')
-    .delete(catchAsync(reservas.deleteReserva));
+router.route('/:idRestaurante')
+    .get(isLoggedIn, catchAsync(reservas.serveReservaForm))
+    .delete(isLoggedIn, catchAsync(isAuthor), catchAsync(reservas.deleteR));
 
 module.exports = router;

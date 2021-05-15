@@ -1,0 +1,60 @@
+<% layout('./layouts/base') %>
+    <h2 class="m-3">Elija su mesa y horario</h2>
+    <ul>
+        <% for (let mesa of mesas) { %>
+            <div class="card mb-3">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <%= mesa.nombre %>
+                            </h5>
+                            <p class="card-text">
+                                <medium>
+                                    - <%= mesa.capacidad %> personas.
+                                </medium>
+                            </p>
+                            <p class="card-text">
+                                <small class="text-muted">
+                                    Piso: <%= mesa.piso %>
+                                </small>
+                            </p>
+                            <form action="/reservas" class="validated-form" method="POST" novalidate>
+                                <input type="hidden" name="idMesa" value="<%= mesa._id %>">
+                                <input type="hidden" name="fecha" value="<%= fecha %>">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" name="i12f13" value="1">
+                                    <label class="form-check-label" for="inlineCheckbox1">12-13 hs.</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2" name='i13f14' value="1">
+                                    <label class="form-check-label" for="inlineCheckbox2">13-14 hs.</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox3" name='i14f15'value="1">
+                                    <label class="form-check-label" for="inlineCheckbox3">14-15 hs.</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox4" name='i19f20'value="1">
+                                    <label class="form-check-label" for="inlineCheckbox4">19-20 hs.</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckboxx" name='i20f21'value="1">
+                                    <label class="form-check-label" for="inlineCheckboxx">20-21 hs.</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox6" name='i21f22'value="1">
+                                    <label class="form-check-label" for="inlineCheckbox6">21-22 hs.</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox7" name='i22f23'value="1">
+                                    <label class="form-check-label" for="inlineCheckbox7">22-23 hs.</label>
+                                </div>
+                                <button class="btn btn-dark">Reservar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <% } %>
+    </ul>
