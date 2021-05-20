@@ -5,6 +5,7 @@ const methodOverride = require('method-override');
 const path = require('path');
 const ejsMate = require('ejs-mate');
 const session = require('express-session');
+const morgan = require('morgan');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const flash = require('connect-flash');
@@ -15,7 +16,8 @@ const { isLoggedIn } = require('./utils/authMiddlewares');
 mongoose.connect('mongodb://localhost:27017/reservas-db', {
     useNewUrlParser: true,
     useCreateIndex: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useFindAndModify: false
 });
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, "connection error"));
@@ -44,6 +46,7 @@ app.use(session(sessionConfig));
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 app.use(methodOverride('_method'));
+app.use(morgan('dev'));
 
 //Authentication
 app.use(passport.initialize());
