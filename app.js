@@ -71,14 +71,18 @@ const userRoutes = require('./routes/users');
 const restauranteRoutes = require('./routes/restaurantes');
 const mesaRoutes = require('./routes/mesas');
 const reservaRoutes = require('./routes/reservas');
+const categoriaRoutes = require('./routes/categorias');
+const productoRoutes = require('./routes/productos');
 
-app.get('/', isLoggedIn, (req, res)=>{
-    res.redirect('/reservas');
+app.get('/', (req, res)=>{
+    res.render('home');
 });
 app.use('/user', userRoutes);
 app.use('/restaurante', restauranteRoutes);
 app.use('/mesa', mesaRoutes);
 app.use('/reservas', reservaRoutes);
+app.use('/categoria', categoriaRoutes);
+app.use('/producto', productoRoutes);
 
 //Shedule activities
 const Reservas = require('./models/reserva');

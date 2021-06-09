@@ -27,7 +27,7 @@
                                     <%= restaurante.direccion %>
                                 </small>
                             </p>
-                            <form action="/reservas/<%= restaurante._id %>" class="validated-form" method="GET" novalidate>
+                            <form action="/reservas/<%= restaurante._id %>" class="validated-form mb-3" method="GET" novalidate>
                                 <label class="form-label" for="fechaReserva">Fecha:</label>
                                 <% 
                                 var date = new Date();
@@ -38,6 +38,11 @@
                                 <input class="form-control mb-3" type="date" id="fechaReserva" name="fecha" min="<%= dateString %>" required>
                                 <button class="btn btn-dark">Reservar <%= restaurante.nombre %></button>
                             </form>
+                            <% if(currentUser.isWaiter){ %> 
+                            <form action="/consumos/<%= restaurante._id %>" class="validated-form" method="GET" novalidate>
+                                <button class="btn btn-dark">Gestionar Consumos</button>
+                            </form>
+                            <% } %>
                         </div>
                     </div>
                 </div>
