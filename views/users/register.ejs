@@ -1,6 +1,6 @@
 <% layout('./layouts/base') %>
     <h1>Registrarse</h1>
-    <form action="/cliente/registrar?_method=PUT" class="validated-form" method="POST" novalidate>
+    <form action="/user/registrar?_method=PUT" class="validated-form" method="POST" novalidate>
         <div class="mb-3">
             <label class="form-label" for="username">Username</label>
             <input class="form-control" type="text" id="username" name="username" required>
@@ -32,6 +32,13 @@
         <div class="mb-3">
             <label class="form-label" for="password">Password</label>
             <input class="form-control" type="password" id="password" name="password" required>
+            <div class="valid-feedback">
+                Looks good!
+            </div>
+        </div>
+        <div class="mb-3">
+            <label class="form-check-label form-label" for="isWaiter">Are you a Waiter?</label>
+            <input class="form-check-input form-control" type="checkbox" id="isWaiter" name="isWaiter" value="True" required>
             <div class="valid-feedback">
                 Looks good!
             </div>

@@ -26,7 +26,7 @@ const updateRest = async(req, res)=>{
 const deleteRest = async (req, res)=>{
     const deletedRest = await Restaurante.findByIdAndDelete(req.body._id);
     req.flash('success', 'Restaurante Eliminado');
-    res.status(200).redirect('/');
+    res.status(200).send(deletedRest);
 }
 
 module.exports = {

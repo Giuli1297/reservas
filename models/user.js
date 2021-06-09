@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const passportLocalMongoose = require('passport-local-mongoose');
 
-const Reserva = require('../models/reserva');
+const Reserva = require('./reserva');
 
 //Model
-const ClientSchema = new Schema({
+const UserSchema = new Schema({
     cedula: {
         type: Number,
         required: true,
@@ -24,12 +24,16 @@ const ClientSchema = new Schema({
             type: Schema.Types.ObjectId,
             ref: 'Reserva'
         }
-    ]
+    ],
+    isWaiter: {
+        type: Boolean,
+        required: true
+    }
 });
 
-ClientSchema.plugin(passportLocalMongoose);
+UserSchema.plugin(passportLocalMongoose);
 
-ClientSchema.post('findOneAndDelete', async function (doc){
+UserSchema.post('findOneAndDelete', async function (doc){
     if(doc){
         await Reserva.deleteMany({
             _id: { $in: doc.reservas }
@@ -37,4 +41,4 @@ ClientSchema.post('findOneAndDelete', async function (doc){
     }
 });
 
-module.exports = mongoose.model('Cliente', ClientSchema);
+module.exports = mongoose.model('User', UserSchema);

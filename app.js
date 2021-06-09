@@ -5,12 +5,14 @@ const methodOverride = require('method-override');
 const path = require('path');
 const ejsMate = require('ejs-mate');
 const session = require('express-session');
-const morgan = require('morgan');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const flash = require('connect-flash');
+const morgan = require('morgan');
+const cron = require('node-cron');
 const ExpressError = require('./utils/ExpressError');
 const { isLoggedIn } = require('./utils/authMiddlewares');
+const catchAsync = require('./utils/catchAsync');
 
 //Database connection
 mongoose.connect('mongodb://localhost:27017/reservas-db', {
@@ -51,10 +53,10 @@ app.use(morgan('dev'));
 //Authentication
 app.use(passport.initialize());
 app.use(passport.session());
-const Client = require('./models/client');
-passport.use(new LocalStrategy(Client.authenticate()));
-passport.serializeUser(Client.serializeUser());
-passport.deserializeUser(Client.deserializeUser());
+const User = require('./models/user');
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 app.use(flash());
 app.use((req, res, next)=>{
@@ -65,7 +67,7 @@ app.use((req, res, next)=>{
 });
 
 //Routes
-const clientRoutes = require('./routes/clients');
+const userRoutes = require('./routes/users');
 const restauranteRoutes = require('./routes/restaurantes');
 const mesaRoutes = require('./routes/mesas');
 const reservaRoutes = require('./routes/reservas');
@@ -73,10 +75,24 @@ const reservaRoutes = require('./routes/reservas');
 app.get('/', isLoggedIn, (req, res)=>{
     res.redirect('/reservas');
 });
-app.use('/cliente', clientRoutes);
+app.use('/user', userRoutes);
 app.use('/restaurante', restauranteRoutes);
 app.use('/mesa', mesaRoutes);
 app.use('/reservas', reservaRoutes);
+
+//Shedule activities
+const Reservas = require('./models/reserva');
+cron.schedule('* * * * *', catchAsync(async ()=>{
+    const reservas = await Reservas.find({});
+    const currentDate = new Date();
+    for(let reserva of reservas){
+        if(currentDate.getTime() > reserva.fecha.getTime()+1000*60*60*24){
+            await Reservas.findByIdAndDelete(reserva._id);
+            console.log("Reserva con id" + reserva._id + "eliminada por vencimiento");    
+        }
+    }
+    return;
+}));
 
 //Error Handling
 app.all('*', (req, res, next)=>{
@@ -84,10 +100,11 @@ app.all('*', (req, res, next)=>{
 });
 
 app.use((err, req, res, next)=>{
-    const { statusCode=500 } = err;
+    const { statusCode=400 } = err;
     if(!err.message) err.message = 'Algo fue mal';
     res.status(statusCode).render('error', {err});
 });
+
 
 //Start server
 app.listen(3003, ()=>{

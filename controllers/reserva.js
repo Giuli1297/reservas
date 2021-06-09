@@ -1,5 +1,5 @@
 const Reserva = require('../models/reserva');
-const Cliente = require('../models/client');
+const User = require('../models/user');
 const Mesa = require('../models/mesa');
 const Restaurante = require('../models/restaurante');
 const reserva = require('../models/reserva');
@@ -106,7 +106,7 @@ const setHours = (i12f13, i13f14, i14f15, i19f20, i20f21, i21f22, i22f23)=>{
 
 const reservar = async (req, res)=>{
     const { idMesa, fecha, i12f13, i13f14, i14f15, i19f20, i20f21, i21f22, i22f23} = req.body;
-    const cliente = await Cliente.findOne({username: req.session.passport.user});
+    const cliente = await User.findOne({username: req.session.passport.user});
     const mesa = await Mesa.findById(idMesa).populate('reservas');
     const { horaInicio, horaFinal} = setHours(i12f13, i13f14, i14f15, i19f20, i20f21, i21f22, i22f23);
     const horaInicioN = parseInt(horaInicio);
@@ -176,7 +176,7 @@ const serveFormListReservas = async (req, res)=>{
     let cliente1;
     let reservaRest2 = [];
     if(cliente){
-        cliente1 = await Cliente.findOne({cedula: cliente}).populate('reservas');
+        cliente1 = await User.findOne({cedula: cliente}).populate('reservas');
         if(!cliente1){
             req.flash('error', 'Cliente No Existe');
             return res.redirect('/reservas/list?clear=true');
@@ -193,6 +193,10 @@ const serveFormListReservas = async (req, res)=>{
             for(let reservaC of cliente1.reservas){
                 reservaRest2.push(reservaC);
             } 
+        }
+        if(reservaRest2.length==0){
+            req.flash('error', 'No existen reservas de ese cliente');       
+            return res.redirect('/reservas/list?clear=true');
         }
     }
     if(reservaRest2.length > 0){
@@ -253,7 +257,7 @@ const compare = (res1, res2)=>{
 const deleteR = async (req, res)=>{
     const id = req.params.idRestaurante;
     const reserva = await Reserva.findOne({_id: id});
-    await Cliente.findOneAndUpdate({cedula: reserva.clienteCI}, {$pull: {reservas: id}});
+    await User.findOneAndUpdate({cedula: reserva.clienteCI}, {$pull: {reservas: id}});
     await Mesa.findOneAndUpdate({_id: reserva.mesa}, {$pull: {reservas: id}});
     await Reserva.findByIdAndDelete(id);
     req.flash('success', 'Reserva Cancelada');

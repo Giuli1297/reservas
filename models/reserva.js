@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+const User = require('./user');
+const Mesa = require('./mesa');
+
 const ReservaSchema = Schema({
     fecha: {
         type: Date,
@@ -28,7 +31,7 @@ const ReservaSchema = Schema({
 
 ReservaSchema.post('remove', async function (doc){
     if(doc){
-        await Cliente.findOneAndUpdate({cedula: doc.clienteCI}, {$pull: {reservas: doc._id}});
+        await User.findOneAndUpdate({cedula: doc.clienteCI}, {$pull: {reservas: doc._id}});
         await Mesa.findOneAndUpdate({_id: doc.mesa}, {$pull: {reservas: doc._id}});
     }
 });
