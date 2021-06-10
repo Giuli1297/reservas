@@ -5,11 +5,10 @@ const createProducto = async (req, res)=>{
     const categoria = await Categoria.findOne({_id: req.body.idCategoria});
     const producto = new Producto(req.body.producto);
     producto.categoria = categoria;
-    console.log(producto);
     categoria.productos.push(producto);
     await producto.save();
     await categoria.save();
-    res.status(201).send(producto);
+    return res.status(201).send(producto);
 }
 
 const listProductos = async (req, res)=>{
@@ -23,14 +22,14 @@ const updateProducto = async (req, res)=>{
     producto.nombre = nombre;
     producto.precioDeVenta = precioDeVenta;
     await producto.save();
-    res.status(200).send(producto);
+    return res.status(200).send(producto);
 }
 
 const deleteProducto = async (req, res)=>{
     const id = req.body._id; 
     const deletedProducto = await Producto.findByIdAndDelete(id);
     await Categoria.findOneAndUpdate({productos: id}, {$pull: {productos: id}});
-    res.status(200).send(deletedProducto);
+    return res.status(200).send(deletedProducto);
 }
 
 module.exports = {

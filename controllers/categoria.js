@@ -1,6 +1,6 @@
 const Categoria = require('../models/categoria');
 
-const createCategoria = async (req, res, next)=>{
+const createCategoria = async (req, res)=>{
     let { nombre } = req.body;
     nombre = nombre.toLowerCase();
     const categoria = new Categoria({nombre});
