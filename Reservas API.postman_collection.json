@@ -12,7 +12,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"nombre\": \"Don Pablo\",\r\n    \"direccion\": \"Aregua, Paraguay\",\r\n    \"imagen\": \"https://fastly.4sqi.net/img/general/200x200/69056865_DOKONd-5mpoL_bfI_Fpduv-rUnGIDEn_WiYxGfaXoPM.jpg\"\r\n}",
+					"raw": "{\r\n    \"nombre\": \"{{$randomCompanyName}}\",\r\n    \"direccion\": \"{{$randomCity}} - {{$randomCountry}}\",\r\n    \"imagen\": \"{{$randomImageUrl}}\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -20,11 +20,10 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:3003/restaurante/create",
+					"raw": "{{baseReservaUrl}}/restaurante/create",
 					"host": [
-						"localhost"
+						"{{baseReservaUrl}}"
 					],
-					"port": "3003",
 					"path": [
 						"restaurante",
 						"create"
@@ -79,11 +78,10 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:3003/restaurante/update",
+					"raw": "{{baseReservaUrl}}/restaurante/update",
 					"host": [
-						"localhost"
+						"{{baseReservaUrl}}"
 					],
-					"port": "3003",
 					"path": [
 						"restaurante",
 						"update"
@@ -107,11 +105,10 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:3003/restaurante/delete",
+					"raw": "{{baseReservaUrl}}/restaurante/delete",
 					"host": [
-						"localhost"
+						"{{baseReservaUrl}}"
 					],
-					"port": "3003",
 					"path": [
 						"restaurante",
 						"delete"
@@ -135,11 +132,10 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:3003/mesa/create",
+					"raw": "{{baseReservaUrl}}/mesa/create",
 					"host": [
-						"localhost"
+						"{{baseReservaUrl}}"
 					],
-					"port": "3003",
 					"path": [
 						"mesa",
 						"create"
@@ -154,11 +150,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:3003/mesa/",
+					"raw": "{{baseReservaUrl}}/mesa/",
 					"host": [
-						"localhost"
+						"{{baseReservaUrl}}"
 					],
-					"port": "3003",
 					"path": [
 						"mesa",
 						""
@@ -182,11 +177,10 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:3003/mesa/update",
+					"raw": "{{baseReservaUrl}}/mesa/update",
 					"host": [
-						"localhost"
+						"{{baseReservaUrl}}"
 					],
-					"port": "3003",
 					"path": [
 						"mesa",
 						"update"
@@ -210,11 +204,10 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:3003/mesa/delete",
+					"raw": "{{baseReservaUrl}}/mesa/delete",
 					"host": [
-						"localhost"
+						"{{baseReservaUrl}}"
 					],
-					"port": "3003",
 					"path": [
 						"mesa",
 						"delete"
@@ -224,10 +217,7 @@
 			"response": []
 		},
 		{
-			"name": "Listar Clientes",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
+			"name": "Listar Usuarios",
 			"request": {
 				"method": "GET",
 				"header": [
@@ -237,23 +227,13 @@
 						"type": "text"
 					}
 				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"cedula\": 5662275,\r\n    \"username\": \"user3\",\r\n    \"nombre\": \"xd\",\r\n    \"apellido\": \"xd\",\r\n    \"password\": \"user\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
 				"url": {
-					"raw": "localhost:3003/cliente/",
+					"raw": "{{baseReservaUrl}}/user/",
 					"host": [
-						"localhost"
+						"{{baseReservaUrl}}"
 					],
-					"port": "3003",
 					"path": [
-						"cliente",
+						"user",
 						""
 					]
 				}
@@ -261,7 +241,7 @@
 			"response": []
 		},
 		{
-			"name": "Registrar Cliente",
+			"name": "Registrar Usuario",
 			"request": {
 				"method": "PUT",
 				"header": [
@@ -273,7 +253,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"cedula\": 5662274,\r\n    \"username\": \"user3\",\r\n    \"nombre\": \"xd\",\r\n    \"apellido\": \"xd\",\r\n    \"password\": \"user3\"\r\n}",
+					"raw": "{\r\n    \"cedula\": 5662274,\r\n    \"username\": \"user2\",\r\n    \"nombre\": \"xd\",\r\n    \"apellido\": \"xd\",\r\n    \"password\": \"user2\",\r\n    \"isWaiter\": true\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -281,18 +261,254 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:3003/cliente/registrar",
+					"raw": "{{baseReservaUrl}}/user/registrar",
 					"host": [
-						"localhost"
+						"{{baseReservaUrl}}"
 					],
-					"port": "3003",
 					"path": [
-						"cliente",
+						"user",
 						"registrar"
 					]
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Crear CategoriaProducto",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Bebidas\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseReservaUrl}}/categoria/create",
+					"host": [
+						"{{baseReservaUrl}}"
+					],
+					"path": [
+						"categoria",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar Categorias",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Arigua\",\r\n    \"direccion\": \"Aregua, Paraguay\",\r\n    \"imagen\": \"https://fastly.4sqi.net/img/general/200x200/69056865_DOKONd-5mpoL_bfI_Fpduv-rUnGIDEn_WiYxGfaXoPM.jpg\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3003/categoria/",
+					"host": [
+						"localhost"
+					],
+					"port": "3003",
+					"path": [
+						"categoria",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modificar Categoria",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"_id\": \"60c1393f0acd169d80d19a63\",\r\n    \"nombre\": \"Bebidas Alcoholicas\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseReservaUrl}}/categoria/update",
+					"host": [
+						"{{baseReservaUrl}}"
+					],
+					"path": [
+						"categoria",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar Categoria",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"_id\": \"60c1393f0acd169d80d19a63\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseReservaUrl}}/categoria/delete",
+					"host": [
+						"{{baseReservaUrl}}"
+					],
+					"path": [
+						"categoria",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear Producto",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"idCategoria\": \"60a021d3c414f66f3cfb2171\",\r\n    \"producto\": {\r\n        \"nombre\": \"Vino SantaHelena\",\r\n        \"precioDeVenta\": 20000\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseReservaUrl}}/producto/create",
+					"host": [
+						"{{baseReservaUrl}}"
+					],
+					"path": [
+						"producto",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar Productos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseReservaUrl}}/producto/",
+					"host": [
+						"{{baseReservaUrl}}"
+					],
+					"path": [
+						"producto",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Actualizar Producto",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"_id\": \"60a057e46e3af773e0d228f0\",\r\n    \"nombre\": \"Cafe Negro Presa Francesa\",\r\n    \"precioDeVenta\": 12000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseReservaUrl}}/producto/update",
+					"host": [
+						"{{baseReservaUrl}}"
+					],
+					"path": [
+						"producto",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar Producto",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"_id\": \"60c13b5d8aae7cab0c567ca1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseReservaUrl}}/producto/delete",
+					"host": [
+						"{{baseReservaUrl}}"
+					],
+					"path": [
+						"producto",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseReservaUrl",
+			"value": "localhost:3003"
 		}
 	]
 }
