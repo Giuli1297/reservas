@@ -3,8 +3,9 @@ const Categoria = require('../models/categoria');
 
 const createProducto = async (req, res)=>{
     const categoria = await Categoria.findOne({_id: req.body.idCategoria});
-    const producto = new Producto(req.body.producto);
-    producto.categoria = categoria;
+    const {nombre, precioDeVenta} = req.body.producto;
+    const producto = new Producto({nombre, precioDeVenta});
+    producto.categoria = categoria._id;
     categoria.productos.push(producto);
     await producto.save();
     await categoria.save();

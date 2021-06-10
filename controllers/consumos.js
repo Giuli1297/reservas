@@ -177,6 +177,20 @@ const printTicket = async (req, res)=>{
     }
 };
 
+const cancelarConsumo = async (req, res)=>{
+    const {idMesa, idConsumo} = req.body;
+    const mesa = await Mesa.findById(idMesa);
+    if(!mesa.ocupado){
+        req.flash('error', 'Mesa Desocupada');
+        return res.redirect('/consumos/detalle?idMesa='+consumo.mesa);
+    }
+    const consumo = await Consumo.findOneAndDelete(idConsumo); 
+    mesa.ocupado = false;
+    await mesa.save();
+    req.flash('error', 'Cuenta Cancelada');
+    return res.redirect('/consumos/detalle?idMesa='+consumo.mesa);
+};
+
 module.exports = {
     serveMesas,
     handleTable,
@@ -184,5 +198,6 @@ module.exports = {
     addProductoForm,
     addProductos,
     cerrarConsumo,
-    printTicket
+    printTicket,
+    cancelarConsumo
 }

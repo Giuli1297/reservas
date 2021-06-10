@@ -5,7 +5,7 @@ const createCategoria = async (req, res)=>{
     nombre = nombre.toLowerCase();
     const categoria = new Categoria({nombre});
     await categoria.save();
-    res.status(201).send(categoria);
+    return res.status(201).send(categoria);
 }
 
 const listCategorias = async (req, res)=>{

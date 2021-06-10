@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const User = require('./user');
 const Mesa = require('./mesa');
+const Detalle = require('./detalle');
 
 const ConsumoSchema = Schema({
     fechaCreacion: {

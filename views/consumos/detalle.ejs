@@ -48,6 +48,13 @@
                     <button class="btn btn-dark">Cerrar Cuenta - Desocupar Mesa</button>
                 </form>
             </div>
+            <div class="mt-5">
+                <form action="/consumos/detalle/cancelar" method="POST">
+                    <input type="hidden" name="idConsumo" value="<%= consumo._id %>">
+                    <input type="hidden" name="idMesa" value="<%= mesa._id %>">
+                    <button class="ml-5 btn btn-danger">Cancelar Cuenta - Desocupar Mesa</button>
+                </form>
+            </div>
         <% } %> 
     </div>
 </div>

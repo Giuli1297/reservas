@@ -9,6 +9,9 @@ const consumo = require('../controllers/consumos');
 router.route('/detalle/cerrar').
     post(isLoggedIn, catchAsync(isWaiter), catchAsync(consumo.cerrarConsumo));
 
+router.route('/detalle/cancelar').
+    post(isLoggedIn, catchAsync(isWaiter), catchAsync(consumo.cancelarConsumo));
+
 router.route('/detalle/addProduct')
     .get(isLoggedIn, catchAsync(isWaiter), catchAsync(consumo.addProductoForm))
     .post(isLoggedIn, catchAsync(isWaiter), catchAsync(consumo.addProductos));

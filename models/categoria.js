@@ -20,7 +20,7 @@ CategoriaSchema.post('findOneAndDelete', async function (doc){
     if(doc){
         const productos = doc.productos;
         await Producto.deleteMany({
-            _id: { $in: doc.mesas }
+            _id: { $in: doc.productos }
         });
     }
 });
