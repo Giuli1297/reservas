@@ -19,7 +19,16 @@ const isAuthor = async(req, res, next)=>{
     next();
 }
 
+const isWaiter = async(req, res, next)=>{
+    if(!(req.user.isWaiter)){
+        req.flash('error', "You don't haver permission to do that!");
+        return res.redirect('/reservas');
+    }
+    next();
+}
+
 module.exports = {
     isLoggedIn,
-    isAuthor
+    isAuthor,
+    isWaiter
 }

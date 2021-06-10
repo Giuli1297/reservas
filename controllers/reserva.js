@@ -135,7 +135,7 @@ const reservar = async (req, res)=>{
             }        
         }
     }
-    const reserva = new Reserva({fecha: date, horaInicio: horaInicioN, horaFinal: horaFinalN, clienteCI: cliente.cedula});
+    const reserva = new Reserva({fecha: date, horaInicio: horaInicioN, horaFinal: horaFinalN, cliente: cliente});
     mesa.reservas.push(reserva);
     await mesa.save();
     mesa.reservas = [];
@@ -257,7 +257,7 @@ const compare = (res1, res2)=>{
 const deleteR = async (req, res)=>{
     const id = req.params.idRestaurante;
     const reserva = await Reserva.findOne({_id: id});
-    await User.findOneAndUpdate({cedula: reserva.clienteCI}, {$pull: {reservas: id}});
+    await User.findOneAndUpdate({_id: reserva.cliente}, {$pull: {reservas: id}});
     await Mesa.findOneAndUpdate({_id: reserva.mesa}, {$pull: {reservas: id}});
     await Reserva.findByIdAndDelete(id);
     req.flash('success', 'Reserva Cancelada');

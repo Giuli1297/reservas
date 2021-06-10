@@ -1,0 +1,116 @@
+<div class="offset-xl-2 col-xl-8 col-lg-12 col-md-12 col-sm-12 col-12 padding">
+    <div class="card">
+        <div class="card-header p-4">
+            <div class="float-right">
+                <h3 class="mb-0">Ticket <%= consumo._id %></h3>
+                Date: <%= consumo.fechaCierre %>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row mb-4">
+                <div class="col-sm-6">
+                    <h3 class="text-dark mb-1">ResvApp</h3>
+                    <div>29, Calle Defensores</div>
+                    <div>Aregua, Paraguay</div>
+                    <div>Email: resv@app.com</div>
+                    <div>Phone: 1231452</div>
+                </div>
+                <div class="col-sm-6">
+                    <div>Nombre o Razon Social: <%= consumo.cliente.nombre %> <%= consumo.cliente.apellido %></div>
+                    <div>Direccion: </div>
+                    <div>Cedula o Ruc: <%= consumo.cliente.cedula %></div>
+                    <div>Phone: </div>
+                </div>
+            </div>
+            <div class="table-responsive-sm">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th class="center">Cantidad</th>
+                            <th>Item</th>
+                            <th class="right">Price</th>
+                            <th class="right">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for(let detalle of consumo.detalles){ %> 
+                        <tr>
+                            <td class="center"><%= detalle.cantidad %></td>
+                            <td class="left strong"><%= detalle.producto.nombre %></td>
+                            <td class="right"><%= detalle.producto.precioDeVenta %></td>
+                            <td class="right"><%= detalle.producto.precioDeVenta*detalle.cantidad %></td>
+                        </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-sm-5">
+                </div>
+                <div class="col-lg-4 col-sm-5 ml-auto">
+                    <table class="table table-clear">
+                        <tbody>
+                            <tr>
+                                <td class="left">
+                                    <strong class="text-dark">Subtotal</strong>
+                                </td>
+                                <td class="right"><%= consumo.total %></td>
+                            </tr>
+                            <tr>
+                                <td class="left">
+                                    <strong class="text-dark">IVA (10%)</strong>
+                                </td>
+                                <td class="right"><%= consumo.total/11 %></td>
+                            </tr>
+                            <tr>
+                                <td class="left">
+                                    <strong class="text-dark">Total</strong> </td>
+                                <td class="right">
+                                    <strong class="text-dark"><%= consumo.total %></strong>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer bg-white">
+            <p class="mb-0">ResvApp, Vuelva Pronto</p>
+        </div>
+    </div>
+</div>
+
+<style>
+    .padding {
+        padding: 2rem !important
+    }
+
+    .card {
+        margin-bottom: 30px;
+        border: none;
+        -webkit-box-shadow: 0px 1px 2px 1px rgba(154, 154, 204, 0.22);
+        -moz-box-shadow: 0px 1px 2px 1px rgba(154, 154, 204, 0.22);
+        box-shadow: 0px 1px 2px 1px rgba(154, 154, 204, 0.22)
+    }
+
+    .card-header {
+        background-color: #fff;
+        border-bottom: 1px solid #e6e6f2
+    }
+
+    h3 {
+        font-size: 20px
+    }
+
+    h5 {
+        font-size: 15px;
+        line-height: 26px;
+        color: #3d405c;
+        margin: 0px 0px 15px 0px;
+        font-family: 'Circular Std Medium'
+    }
+
+    .text-dark {
+        color: #3d405c !important
+    }
+</style>

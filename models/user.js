@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 const passportLocalMongoose = require('passport-local-mongoose');
 
 const Reserva = require('./reserva');
+const Consumo = require('./consumo');
 
 //Model
 const UserSchema = new Schema({
@@ -25,6 +26,12 @@ const UserSchema = new Schema({
             ref: 'Reserva'
         }
     ],
+    consumos: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Consumo'
+        }
+    ],
     isWaiter: {
         type: Boolean,
         required: true
@@ -37,6 +44,9 @@ UserSchema.post('findOneAndDelete', async function (doc){
     if(doc){
         await Reserva.deleteMany({
             _id: { $in: doc.reservas }
+        });
+        await Consumo.deleteMany({
+            _id: { $in: doc.consumos }
         });
     }
 });

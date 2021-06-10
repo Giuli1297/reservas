@@ -1,0 +1,31 @@
+<% layout('./layouts/base') %>
+    <h2 class="m-3">Seleccione Mesa</h2>
+    <ul>
+        <% for (let mesa of mesas) { %>
+            <div class="card mb-3">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <%= mesa.nombre %>
+                            </h5>
+                            <p class="card-text">
+                                <medium>
+                                    - <%= mesa.capacidad %> personas.
+                                </medium>
+                            </p>
+                            <p class="card-text">
+                                <small class="text-muted">
+                                    Piso: <%= mesa.piso %>
+                                </small>
+                            </p>
+                            <form action="/consumos/detalle" class="validated-form" method="GET" novalidate>
+                                <input type="hidden" name="idMesa" value="<%= mesa._id %>">
+                                <button class="btn btn-dark">Seleccionar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <% } %>
+    </ul>
